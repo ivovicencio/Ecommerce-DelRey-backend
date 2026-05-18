@@ -19,7 +19,7 @@ const Producto = sequelize.define('Producto', {
   descripcion: { type: DataTypes.TEXT, allowNull: false },
   precio: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   categoria: { type: DataTypes.STRING, allowNull: false },
-  imagen_url: { type: DataTypes.STRING, allowNull: false }
+  imagen_url: { type: DataTypes.STRING, allowNull: true }
 }, { timestamps: false });
 
 const StockTalle = sequelize.define('StockTalle', {
