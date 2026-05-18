@@ -32,3 +32,5 @@ productoCtrl.createProducto = async (req, res) => {
         res.status(400).json({ status: '0', msg: 'Error guardando producto.' });
     }
 };
+
+module.exports = productoCtrl;
