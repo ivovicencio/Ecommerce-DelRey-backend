@@ -13,7 +13,13 @@ const sequelize = new Sequelize(
     }
 );
 
-//todo esto es para definir los modelos de la base de datos, cada modelo representa una tabla en la base de datos y sus campos representan las columnas de esa tabla
+const Usuario = sequelize.define('Usuario', {
+  nombre: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false, unique: true },
+  password: { type: DataTypes.STRING, allowNull: false },
+  rol: { type: DataTypes.STRING, defaultValue: 'cliente' }
+}, { timestamps: false });
+
 const Producto = sequelize.define('Producto', {
   nombre: { type: DataTypes.STRING, allowNull: false },
   descripcion: { type: DataTypes.TEXT, allowNull: false },
@@ -51,4 +57,4 @@ Producto.hasMany(DetallePedido, { foreignKey: 'producto_id' });
 DetallePedido.belongsTo(Producto, { foreignKey: 'producto_id' });
 
 //esto es para sincronizar los modelos con la base de datos, esto crea las tablas en la base de datos si no existen, y actualiza las tablas si los modelos cambian
-module.exports = {sequelize, Producto, StockTalle, Pedido, DetallePedido};
+module.exports = {sequelize, Usuario, Producto, StockTalle, Pedido, DetallePedido};

@@ -1,25 +1,16 @@
 const multer = require('multer');
-const path = require('path');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '..', 'uploads'));
-  },
-  filename: (req, file, cb) => {
-    const unique = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = path.extname(file.originalname);
-    cb(null, unique + ext);
-  }
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-const fileFilter = (req, file, cb) => {
-  const allowed = ['.jpg', '.jpeg', '.png', '.webp'];
-  const ext = path.extname(file.originalname).toLowerCase();
-  if (allowed.includes(ext)) {
-    cb(null, true);
-  } else {
-    cb(new Error('Solo se permiten imágenes JPG, PNG o WebP.'));
-  }
-};
+const storage = cloudinaryStorage({
+  cloudinary: cloudinary,
+  params: { folder: 'del_rey_catalogo', allowedFormats: ['jpg', 'png', 'jpeg', 'webp'] },
+});
 
-module.exports = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
+module.exports = multer({ storage: storage, limits: { fileSize: 5 * 1024 * 1024 } });
