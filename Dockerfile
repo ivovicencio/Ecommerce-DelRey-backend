@@ -3,5 +3,6 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY . .
+RUN chmod +x start.sh
 EXPOSE 3000
-CMD ["node", "index.js"]
+CMD ["/bin/sh", "start.sh"]
