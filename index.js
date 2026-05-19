@@ -19,6 +19,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/productos', require('./routes/producto.route'));
 app.use('/api/pedidos', require('./routes/pedido.route'));
+app.use('/api/contacto', require('./routes/contacto.route'));
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 if (isProd) {
