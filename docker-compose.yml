@@ -1,46 +1,7 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:15-alpine
-    container_name: delrey_db
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: adminpassword
-      POSTGRES_DB: delreydb
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   backend:
     build: .
     container_name: delrey_backend
     ports:
       - "3000:3000"
-    environment:
-      NODE_ENV: production
-      DB_USER: postgres
-      DB_PASSWORD: adminpassword
-      DB_NAME: delreydb
-      DB_HOST: db
-      PORT: 3000
-      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
-      JWT_SECRET: ${JWT_SECRET}
-      ADMIN_EMAIL: admin@delrey.com
-      ADMIN_PASSWORD: admin123
-    depends_on:
-      db:
-        condition: service_healthy
     restart: unless-stopped
-
-volumes:
-  pgdata:
