@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = process.env.JWT_SECRET || 'delrey_secret_key_change_in_prod';
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  console.error('FATAL: JWT_SECRET no está configurado.');
+  process.exit(1);
+}
 
 const verificarToken = (req, res, next) => {
   const header = req.headers.authorization;

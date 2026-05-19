@@ -56,5 +56,11 @@ DetallePedido.belongsTo(Pedido, { foreignKey: 'pedido_id' });
 Producto.hasMany(DetallePedido, { foreignKey: 'producto_id' });
 DetallePedido.belongsTo(Producto, { foreignKey: 'producto_id' });
 
+const Resena = sequelize.define('Resena', {
+  nombre: { type: DataTypes.STRING, allowNull: false },
+  mensaje: { type: DataTypes.TEXT, allowNull: false },
+  fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
+}, { timestamps: false });
+
 //esto es para sincronizar los modelos con la base de datos, esto crea las tablas en la base de datos si no existen, y actualiza las tablas si los modelos cambian
-module.exports = {sequelize, Usuario, Producto, StockTalle, Pedido, DetallePedido};
+module.exports = {sequelize, Usuario, Producto, StockTalle, Pedido, DetallePedido, Resena};
