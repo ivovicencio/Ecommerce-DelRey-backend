@@ -25,16 +25,15 @@ const Producto = sequelize.define('Producto', {
   descripcion: { type: DataTypes.TEXT, allowNull: false },
   precio: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   categoria: { type: DataTypes.STRING, allowNull: false },
+  tipo: { type: DataTypes.STRING, allowNull: true },
+  talles: { type: DataTypes.JSON, allowNull: true },
   imagen_url: { type: DataTypes.STRING, allowNull: true }
-}, { timestamps: false });
-
-const StockTalle = sequelize.define('StockTalle', {
-  numero_talle: { type: DataTypes.INTEGER, allowNull: false },
-  stock: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 }
 }, { timestamps: false });
 
 const Pedido = sequelize.define('Pedido', {
   codigo: { type: DataTypes.STRING, allowNull: false, unique: true },
+  cliente_nombre: { type: DataTypes.STRING, allowNull: false },
+  cliente_direccion: { type: DataTypes.TEXT, allowNull: false },
   total: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   estado: { type: DataTypes.STRING, defaultValue: 'Pendiente' },
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
@@ -45,10 +44,6 @@ const DetallePedido = sequelize.define('DetallePedido', {
   cantidad: { type: DataTypes.INTEGER, allowNull: false },
   precio_unitario: { type: DataTypes.DECIMAL(10, 2), allowNull: false }
 }, { timestamps: false });
-
-//relaciones entre las tablas, esto es para que sequelize sepa como relacionar los modelos entre si, por ejemplo un producto puede tener muchos talles y un talle pertenece a un producto, lo mismo con los pedidos y los detalles de pedido
-Producto.hasMany(StockTalle, { as: 'talles', foreignKey: 'producto_id', onDelete: 'CASCADE' });
-StockTalle.belongsTo(Producto, { foreignKey: 'producto_id' });
 
 Pedido.hasMany(DetallePedido, { as: 'items', foreignKey: 'pedido_id', onDelete: 'CASCADE' });
 DetallePedido.belongsTo(Pedido, { foreignKey: 'pedido_id' });
@@ -62,5 +57,4 @@ const Resena = sequelize.define('Resena', {
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 }, { timestamps: false });
 
-//esto es para sincronizar los modelos con la base de datos, esto crea las tablas en la base de datos si no existen, y actualiza las tablas si los modelos cambian
-module.exports = {sequelize, Usuario, Producto, StockTalle, Pedido, DetallePedido, Resena};
+module.exports = {sequelize, Usuario, Producto, Pedido, DetallePedido, Resena};
