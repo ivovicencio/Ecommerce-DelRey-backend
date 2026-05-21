@@ -52,6 +52,7 @@ app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/productos', require('./routes/producto.route'));
 app.use('/api/pedidos', require('./routes/pedido.route'));
 app.use('/api/contacto', require('./routes/contacto.route'));
+app.use('/api/contador', require('./routes/contador.route'));
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.get('/api/seed-productos', async (req, res) => {
   try {

@@ -59,4 +59,9 @@ const Resena = sequelize.define('Resena', {
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 }, { timestamps: false });
 
-module.exports = {sequelize, Usuario, Producto, Pedido, DetallePedido, Resena};
+const Contador = sequelize.define('Contador', {
+  nombre: { type: DataTypes.STRING, allowNull: false, unique: true },
+  valor: { type: DataTypes.INTEGER, defaultValue: 0 }
+}, { timestamps: false });
+
+module.exports = {sequelize, Usuario, Producto, Pedido, DetallePedido, Resena, Contador};
