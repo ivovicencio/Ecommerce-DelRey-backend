@@ -53,6 +53,16 @@ app.use('/api/productos', require('./routes/producto.route'));
 app.use('/api/pedidos', require('./routes/pedido.route'));
 app.use('/api/contacto', require('./routes/contacto.route'));
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/seed-productos', async (req, res) => {
+  try {
+    const { Producto } = require('./database');
+    const count = await Producto.count();
+    if (count > 0) return res.json({ msg: `Ya existen ${count} productos.` });
+    const productos = require('./scripts/productos-data');
+    for (const p of productos) { await Producto.create(p); }
+    res.json({ msg: `${productos.length} productos creados.` });
+  } catch (e) { res.status(500).json({ msg: 'Error: ' + e.message }); }
+});
 
 if (isProd) {
   app.use(express.static(path.join(__dirname, 'public')));
