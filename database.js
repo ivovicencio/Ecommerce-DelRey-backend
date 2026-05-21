@@ -34,6 +34,7 @@ const Pedido = sequelize.define('Pedido', {
   codigo: { type: DataTypes.STRING, allowNull: false, unique: true },
   cliente_nombre: { type: DataTypes.STRING, allowNull: true },
   cliente_direccion: { type: DataTypes.TEXT, allowNull: true },
+  metodo_pago: { type: DataTypes.STRING, allowNull: true, defaultValue: 'Efectivo' },
   total: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   estado: { type: DataTypes.STRING, defaultValue: 'Pendiente' },
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }

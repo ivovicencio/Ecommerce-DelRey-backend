@@ -10,6 +10,7 @@ pedidoCtrl.createPedido = async (req, res) => {
             codigo: `#DELREY-${codigoRandom}`,
             cliente_nombre: req.body.cliente_nombre,
             cliente_direccion: req.body.cliente_direccion,
+            metodo_pago: req.body.metodo_pago || 'Efectivo',
             total: req.body.total,
             items: req.body.items
         }, {
