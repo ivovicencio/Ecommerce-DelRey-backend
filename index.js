@@ -62,6 +62,7 @@ if (isProd) {
   });
 }
 
+app.set('trust proxy', 1);
 app.set('port', process.env.PORT || 3000);
 
 sequelize.sync({ alter: true }).then(() => {

@@ -32,8 +32,8 @@ const Producto = sequelize.define('Producto', {
 
 const Pedido = sequelize.define('Pedido', {
   codigo: { type: DataTypes.STRING, allowNull: false, unique: true },
-  cliente_nombre: { type: DataTypes.STRING, allowNull: false },
-  cliente_direccion: { type: DataTypes.TEXT, allowNull: false },
+  cliente_nombre: { type: DataTypes.STRING, allowNull: true },
+  cliente_direccion: { type: DataTypes.TEXT, allowNull: true },
   total: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   estado: { type: DataTypes.STRING, defaultValue: 'Pendiente' },
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
