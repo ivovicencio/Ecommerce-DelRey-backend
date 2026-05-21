@@ -55,6 +55,7 @@ DetallePedido.belongsTo(Producto, { foreignKey: 'producto_id' });
 const Resena = sequelize.define('Resena', {
   nombre: { type: DataTypes.STRING, allowNull: false },
   mensaje: { type: DataTypes.TEXT, allowNull: false },
+  puntuacion: { type: DataTypes.INTEGER, allowNull: true, defaultValue: 5 },
   fecha: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
 }, { timestamps: false });
 

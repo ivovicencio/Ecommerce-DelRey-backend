@@ -15,11 +15,11 @@ exports.getResenas = async (req, res) => {
 
 exports.createResena = async (req, res) => {
   try {
-    const { nombre, mensaje } = req.body;
+    const { nombre, mensaje, puntuacion } = req.body;
     if (!nombre || !mensaje) {
       return res.status(400).json({ status: '0', msg: 'Nombre y mensaje son obligatorios.' });
     }
-    await Resena.create({ nombre, mensaje });
+    await Resena.create({ nombre, mensaje, puntuacion: puntuacion || 5 });
     res.json({ status: '1', msg: 'Reseña enviada con éxito. ¡Gracias!' });
   } catch (error) {
     console.error('Error guardando reseña:', error);
