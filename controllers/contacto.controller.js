@@ -1,5 +1,18 @@
 const { Resena } = require('../database');
 
+exports.getResenas = async (req, res) => {
+  try {
+    const resenas = await Resena.findAll({
+      order: [['fecha', 'DESC']],
+      limit: 20
+    });
+    res.json(resenas);
+  } catch (error) {
+    console.error('Error al obtener reseñas:', error);
+    res.status(500).json({ status: '0', msg: 'Error al obtener reseñas.' });
+  }
+};
+
 exports.createResena = async (req, res) => {
   try {
     const { nombre, mensaje } = req.body;
