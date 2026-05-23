@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { Sequelize, Op } = require('sequelize');
 const { sequelize, Usuario } = require('../database');
 
 async function seed() {
@@ -7,6 +8,9 @@ async function seed() {
   const adminEmail = process.env.ADMIN_EMAIL || 'admin@delrey.com';
   const adminPass = process.env.ADMIN_PASSWORD || 'admin123';
   const adminNombre = process.env.ADMIN_NOMBRE || 'Admin';
+
+  // Eliminar admins con email viejo (por si cambió el env var)
+  await Usuario.destroy({ where: { rol: 'admin', email: { [Op.ne]: adminEmail } } });
 
   const existe = await Usuario.findOne({ where: { email: adminEmail } });
 
