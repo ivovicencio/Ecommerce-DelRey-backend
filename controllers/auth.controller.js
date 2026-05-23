@@ -13,6 +13,10 @@ authCtrl.register = async (req, res) => {
       return res.status(400).json({ status: '0', msg: 'Todos los campos son obligatorios.' });
     }
 
+    if (password.length < 8) {
+      return res.status(400).json({ status: '0', msg: 'La contraseña debe tener al menos 8 caracteres.' });
+    }
+
     const existe = await Usuario.findOne({ where: { email } });
     if (existe) {
       return res.status(400).json({ status: '0', msg: 'El email ya está registrado.' });
@@ -68,6 +72,25 @@ authCtrl.login = async (req, res) => {
   } catch (error) {
     console.error('Error login:', error);
     res.status(500).json({ status: '0', msg: 'Error al iniciar sesión.', details: error.message });
+  }
+};
+
+authCtrl.cambiarPassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (!password || password.length < 8) {
+      return res.status(400).json({ status: '0', msg: 'La contraseña debe tener al menos 8 caracteres.' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    await Usuario.update({ password: hash }, { where: { id: req.usuario.id } });
+
+    res.json({ status: '1', msg: 'Contraseña actualizada correctamente.' });
+  } catch (error) {
+    console.error('Error cambiar password:', error);
+    res.status(500).json({ status: '0', msg: 'Error al cambiar la contraseña.', details: error.message });
   }
 };
 
